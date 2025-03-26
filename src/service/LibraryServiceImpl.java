@@ -11,24 +11,30 @@ public class LibraryServiceImpl implements LibraryService {
 
      Map<Integer, Book> library_books = new HashMap<>();
 
+     //* Add the Book to the Library
     @Override
     public void addBook (Book book) {
+        //Check if the Book is existing or Not
         if(library_books.containsKey(book.getId())){
             System.out.println("Book already exists");
-            library_books.get(book.getId());
             return;
         }
+
+        // Empty or Invalid String Validation
         if(book.getTitle().isEmpty() || book.getAuthor().isEmpty() ) {
             System.out.println("Invalid input");
             System.out.println("Fields cannot be empty");
             return;
         }
+
         library_books.put(book.getId(), book);
         System.out.println("Successfully Added Book: " + book);
     }
 
+
     @Override
     public Book getBookByID (int id) {
+        //Check the book is Present or Not.
         if(!library_books.containsKey(id)){
             System.out.println("Book does not exist");
             return null;
@@ -43,10 +49,13 @@ public class LibraryServiceImpl implements LibraryService {
 
     @Override
     public List<Book> getBookByTitle (String title) {
+        //Trim the White spaces if any
+        String searchTitle = title.trim();
 
-        String searchTitle = title.trim().toLowerCase();
+        //Create List for store all the Books with same Name
         List<Book> booksByTitle = new ArrayList<>();
         for(Book book : library_books.values()){
+            // Check without cases
             if(book.getTitle().equalsIgnoreCase(searchTitle)){
                 booksByTitle.add(book);
             }
@@ -56,10 +65,12 @@ public class LibraryServiceImpl implements LibraryService {
 
     @Override
     public void updateBook (int id, Book book) {
+        //Check the Book Presence
         if(!library_books.containsKey(id)){
             System.out.println("Book does not exist");
             return;
         }
+        //update the new Book
         library_books.put(id, book);
         System.out.println("Successfully Updated Book: " + book);
         library_books.get(id);
@@ -67,6 +78,7 @@ public class LibraryServiceImpl implements LibraryService {
 
     @Override
     public void deleteBook (int id) {
+        // Check if the Book is Present
         if(!library_books.containsKey(id)){
             System.out.println("Book does not exist");
             return;
@@ -78,6 +90,7 @@ public class LibraryServiceImpl implements LibraryService {
 
     @Override
     public void getAllBooks () {
+        // Check Empty Books
         if(library_books.isEmpty()){
             System.out.println("There is no books in the library");
             return;
@@ -89,4 +102,6 @@ public class LibraryServiceImpl implements LibraryService {
 
         System.out.println("Successfully Retrieved All Books");
     }
+
+
 }

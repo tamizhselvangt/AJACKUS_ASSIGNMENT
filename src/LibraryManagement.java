@@ -10,11 +10,13 @@ public class LibraryManagement {
 
     final LibraryService libraryService;
 
+    //Constructor For injecting Library Service
     public LibraryManagement() {
         this.libraryService = new LibraryServiceImpl();
     }
 
 
+    //Update Book Method
     public void updateBookFromClient(){
         Scanner scanner = new Scanner(System.in);
         System.out.print("Enter Book ID to be Update: ");
@@ -26,6 +28,7 @@ public class LibraryManagement {
         if(oldBook == null){
             return;
         }
+        // Store the Old Values.
         String bookTitle = oldBook.getTitle();
         String bookAuthor = oldBook.getAuthor();
         String bookGenre = oldBook.getGenre();
@@ -42,6 +45,7 @@ public class LibraryManagement {
             System.out.println("5. Finish Update");
             System.out.print("Enter Choice: ");
             int val = scanner.nextInt();
+            //Avoid the Unwanted Scanner behaviour.
             scanner.nextLine();
             switch(val){
                 case 1:
@@ -73,16 +77,17 @@ public class LibraryManagement {
             }
         }
 
+
+        //Update the new Value.
         oldBook.setTitle(bookTitle);
         oldBook.setAuthor(bookAuthor);
         oldBook.setGenre(bookGenre);
         oldBook.setAvailableStatus(bookAvailability);
-
-
         libraryService.updateBook(bookId, oldBook);
 
     }
 
+    //Get Details from the Client
     public void storeBookFromClient() {
         Scanner scanner = new Scanner(System.in);
 
@@ -131,8 +136,11 @@ public class LibraryManagement {
 
     public static void main(String[] args){
         LibraryManagement libraryManagement = new LibraryManagement();
+
         Scanner sc = new Scanner(System.in);
         System.out.println("******* Welcome to the Library Management System *******");
+
+        //Main Menu
         while (true){
             System.out.println("1. Add Book to a Library");
             System.out.println("2. Search Book by ID");
@@ -145,10 +153,12 @@ public class LibraryManagement {
             int choice = sc.nextInt();
 
             switch (choice){
+                // * Add the new Book
                 case 1:
                     libraryManagement.storeBookFromClient();
                     break;
                 case 2:
+                    // * Find By ID
                     System.out.print("Enter the book ID: ");
                     int bookId = sc.nextInt();
                     System.out.println(
@@ -156,6 +166,7 @@ public class LibraryManagement {
                     );
                     break;
                 case 3:
+                    // * Find By Title
                     sc.nextLine();
                     System.out.print("Enter the book title: ");
                     String bookTitle = sc.nextLine().trim();  // Read actual input
@@ -168,31 +179,34 @@ public class LibraryManagement {
                     }
                     break;
                 case 4:
+                    // * Update Old Book
                     libraryManagement.updateBookFromClient();
                     break;
                 case 5:
+                    // * Delete Old Book
                     System.out.print("Enter the book ID for deletion: ");
                     int id = sc.nextInt();
                     libraryManagement.libraryService.deleteBook(id);
                     break;
                 case 6:
+                    // * View All Books
                     libraryManagement.libraryService.getAllBooks();
                     break;
                 case 7:
+                    // * Close the System
                     System.out.println("Thank you for using Library Management System");
                     System.out.println("Exiting...");
                     sc.close();
                     System.exit(0);
                 default:
+                    // * Wrong Input
                     System.out.println("Wrong choice");
                     System.out.println("System Exiting...");
                     sc.close();
                     System.exit(0);
 
             }
-
             System.out.println();
-
         }
     }
 }
