@@ -9,12 +9,6 @@ public class Book {
    AvailableStatus availableStatus;
 
     public Book (int id, String title, String author, String genre, AvailableStatus availableStatus) {
-
-        if(title.isEmpty() || author.isEmpty() ) {
-            System.out.println("Invalid input");
-            System.out.println("Fields cannot be empty");
-            return;
-        }
         this.id = id;
         this.title = title;
         this.author = author;
